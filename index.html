@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Water Quality Monitoring Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>Domestic Water Quality Monitoring</h1>
+
+    <!-- Map for Location Selection -->
+    <div class="map-container">
+      <h2>Select Water Collection Location</h2>
+      <div id="map" style="height: 400px; border-radius: 10px; overflow: hidden;"></div>
+      <p>Selected Location: <span id="selectedLocation">None</span></p>
+    </div>
+
+    <!-- Sensor Cards -->
+    <div class="dashboard">
+      <div class="sensor-values">
+        <!-- pH Sensor Card -->
+        <div class="sensor-card">
+          <i class="fas fa-water icon" data-info="pH is a measure of how acidic/basic water is. The safe range for drinking water is 6.5 to 8.5."></i>
+          <h2>pH Level</h2>
+          <p><span id="phValue">0</span></p>
+          <div class="status" id="phStatus"></div>
+          <small>Safe Range: 6.5 - 8.5</small>
+          <div class="suggestion" id="phSuggestion"></div>
+          <button class="info-button" id="phButton">Learn More</button>
+        </div>
+
+        <!-- Turbidity Sensor Card -->
+        <div class="sensor-card">
+          <i class="fas fa-tint icon" data-info="Turbidity measures water clarity. The safe range for drinking water is below 1 NTU."></i>
+          <h2>Turbidity</h2>
+          <p><span id="turbidityValue">0</span> NTU</p>
+          <div class="status" id="turbidityStatus"></div>
+          <small>Safe Range: Below 1 NTU</small>
+          <div class="suggestion" id="turbiditySuggestion"></div>
+          <button class="info-button" id="turbidityButton">Learn More</button>
+        </div>
+
+        <!-- TDS Sensor Card -->
+        <div class="sensor-card">
+          <i class="fas fa-flask icon" data-info="TDS measures dissolved solids in water. The safe range for drinking water is below 300 ppm."></i>
+          <h2>TDS</h2>
+          <p><span id="tdsValue">0</span> ppm</p>
+          <div class="status" id="tdsStatus"></div>
+          <small>Safe Range: Below 300 ppm</small>
+          <div class="suggestion" id="tdsSuggestion"></div>
+          <button class="info-button" id="tdsButton">Learn More</button>
+        </div>
+      </div>
+
+      <!-- Graphs -->
+      <div class="graph-container">
+        <div class="graph">
+          <canvas id="phChart"></canvas>
+        </div>
+        <div class="graph">
+          <canvas id="turbidityChart"></canvas>
+        </div>
+        <div class="graph">
+          <canvas id="tdsChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Combined Graph -->
+      <div class="combined-graph">
+        <h2>Combined Sensor Data</h2>
+        <canvas id="combinedChart"></canvas>
+      </div>
+
+      <!-- Data Table -->
+      <div class="data-table">
+        <h2>Historical Sensor Data</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>pH</th>
+              <th>Turbidity (NTU)</th>
+              <th>TDS (ppm)</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+
+      <!-- Report Issues Form -->
+      <div class="contact-section">
+        <h2>Report Water Quality Issues</h2>
+        <form id="reportForm">
+          <label for="issueDescription">Describe the Issue:</label>
+          <textarea id="issueDescription" rows="4" required></textarea>
+          <button type="submit" class="info-button">Submit Report</button>
+        </form>
+        <p id="reportStatus"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modals -->
+  <div id="infoModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2 id="modalTitle"></h2>
+      <p id="modalInfo"></p>
+    </div>
+  </div>
+
+  <div id="healthModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2 id="healthModalTitle"></h2>
+      <p id="healthModalInfo"></p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
